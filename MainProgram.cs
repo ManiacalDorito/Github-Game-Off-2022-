@@ -4,14 +4,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Game_Jam_Game
 {
-    public class Game1 : Game
+    public class MainProgram : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        public MainProgram()
         {
             _graphics = new GraphicsDeviceManager(this);
+            
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -32,6 +33,8 @@ namespace Game_Jam_Game
 
         protected override void Update(GameTime gameTime)
         {
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
