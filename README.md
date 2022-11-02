@@ -1,3 +1,3 @@
 # Game Jam Game
 
-Probably going to do the cliche "When life gives you lemons make lemonade"
+"When life gives you lemons, make lemonade!" is the cliche that we will be doing
