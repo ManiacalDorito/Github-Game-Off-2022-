@@ -10,6 +10,9 @@ namespace Game_Jam_Game
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private SceneManager sceneManager;
+
+
         public MainProgram()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -20,8 +23,8 @@ namespace Game_Jam_Game
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            // sceneManager has a scene in it, just do sceneManager.currentscene to get the current level
+            sceneManager = new SceneManager();
             base.Initialize();
         }
 
@@ -39,6 +42,15 @@ namespace Game_Jam_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                sceneManager.saveScene("egg.fuck");
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            {
+                sceneManager.loadScene("scene1");
+            }
 
             base.Update(gameTime);
         }
@@ -46,7 +58,7 @@ namespace Game_Jam_Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+        
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

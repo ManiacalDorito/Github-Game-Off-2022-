@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Game_Jam_Game
 {
-    internal class Object
+    public class Object
     {
         Vector2 position;
         float rotation;
@@ -17,6 +17,14 @@ namespace Game_Jam_Game
             this.rotation = rotation;
             this.texture = texture;
             this.name = name;
+        }
+
+        public Object()
+        {
+            this.position = Vector2.Zero;
+            this.rotation = 0;
+            this.texture = null;
+            this.name = null;
         }
     }
 }

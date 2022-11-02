@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Xml.Serialization;
+using static System.Formats.Asn1.AsnWriter;
 
 
 namespace Game_Jam_Game
@@ -10,21 +13,31 @@ namespace Game_Jam_Game
     internal class SceneManager
     {
         Scene currentScene;
+        
 
         public SceneManager()
         {
-            currentScene = null;
+            currentScene = new Scene("Scene!");
         }
 
-        void loadScene(Scene toLoad)
+        public void loadScene(string fileName)
         {
-            // Load it from file, implement serializing
-            currentScene = toLoad;
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            {
+                var xSerializer = new XmlSerializer(typeof(Scene));
+                currentScene = (Scene)xSerializer.Deserialize(fs);
+                fs.Dispose();
+            }
         }
 
-        void saveScene()
+        public void saveScene(string fileName)
         {
-            // Gotta save it to file too fuck
+            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                var xSerializer = new XmlSerializer(typeof(Scene));
+                xSerializer.Serialize(fs, currentScene);
+                fs.Close();
+            }
         }
     }
 }
