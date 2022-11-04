@@ -9,12 +9,12 @@ namespace Game_Jam_Game
     [System.Serializable]
     public class Scene
     {
-        public List<Object> SceneObjects { get; set; }
+        public Dictionary<string, Object> sceneObjects { get; set; }
         public string name { get; set; }
 
         public Scene(string name)
         {
-            SceneObjects = new List<Object>();
+            sceneObjects = new Dictionary<string, Object>();
             this.name = name;
         }
 
