@@ -20,6 +20,21 @@ namespace Game_Jam_Game
 
         // Automatically creates the collisionRect from the sourceRect 
 
+        public Object()
+        {
+            this.position = new Vector2(0, 0);
+            this.rotation = 0f;
+            this.texture = null;
+            this.name = "";
+            this.sourceRect = Rectangle.Empty;
+            this.Color = Color.White;
+            this.origin = Vector2.Zero;
+            this.spriteEffects = SpriteEffects.None;
+            this.layerDepth = 0;
+            this.scale = 1f;
+            this.collisionRect = Rectangle.Empty;
+        }
+
         /// <summary>
         /// Creates an object (default)
         /// </summary>
