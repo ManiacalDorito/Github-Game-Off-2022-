@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Game_Jam_Game
 {
+    [System.Serializable]
     public class Object
     {
         public Vector2 position;
