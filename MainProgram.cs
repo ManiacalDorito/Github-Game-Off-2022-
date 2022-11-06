@@ -51,12 +51,12 @@ namespace Game_Jam_Game
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                sceneManager.saveScene("egg.fuck");
+                sceneManager.saveScene("egg.scene");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.L))
             {
-                sceneManager.loadScene("scene1");
+                sceneManager.loadScene("egg.scene");
             }
 
             Object lime;

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text.Json;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 
 namespace Game_Jam_Game
@@ -24,45 +24,49 @@ namespace Game_Jam_Game
 
         public void loadScene(string fileName)
         {
-            Stream stream = null;
 
             // Catches errors if the scene name is mispelled or the file cant be found
             try
             {
-                stream = File.OpenRead(fileName);
+                // Makes a reader, reads the file and saves it to string json
+                StreamReader sr = new StreamReader(fileName);
+                string json = sr.ReadToEndAsync().Result;
+
+                // converts from json string to Scene object
+                currentScene = JsonConvert.DeserializeObject<Scene>(json);
+            
+                sr.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
             
-            JsonSerializerOptions options = new JsonSerializerOptions();
-
-            // Deserializes the saved scene and puts it into currentScene to be loaded and shit
-            currentScene = JsonSerializer.Deserialize<Scene>(stream, options);
+            
 
         }
 
         public void saveScene(string fileName)
         {
-            Stream stream = null;
 
-            // Catches errors if the scene name is mispelled or the file cant be found
+            // Catches errors if it can't save for some reason
             try
             {
-                stream = File.OpenWrite(fileName);
+                StreamWriter writer = new StreamWriter(fileName);
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+
+                writer.Write(JsonConvert.SerializeObject(currentScene, Formatting.Indented));
+                
+                Console.Write("Saved to: " + fileName);
+                
+                writer.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            JsonSerializerOptions options = new JsonSerializerOptions();
-
-            // Saves current scene to file specified for loading later  
-            JsonSerializer.Serialize(stream, currentScene, options);
-            Console.Write("Saved to: " + stream);
-            stream.Close();
+            
         }
     }
 }
