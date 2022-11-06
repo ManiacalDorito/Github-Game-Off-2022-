@@ -12,7 +12,7 @@ namespace Game_Jam_Game
 
         private SceneManager sceneManager;
 
-        Texture2D limeTex;
+        Texture2D playerTex;
 
         public MainProgram()
         {
@@ -28,19 +28,23 @@ namespace Game_Jam_Game
             sceneManager = new SceneManager();
             base.Initialize();
 
-            
+            sceneManager.currentScene.sceneObjects.Add("player", new Object(Vector2.Zero, 0f, playerTex, "player", new Rectangle(0, 0, playerTex.Width, playerTex.Height), Color.White, Vector2.Zero, SpriteEffects.None, 0, 2f));
+
+
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            
 
-            limeTex = Content.Load<Texture2D>("Sprites/lime2");
+            playerTex = Content.Load<Texture2D>("Sprites/lime2");
+            
 
-            sceneManager.currentScene.sceneObjects.Add("lime", new Object(Vector2.Zero, 0f, limeTex, "lime", new Rectangle(0, 0, limeTex.Width, limeTex.Height), Color.White, Vector2.Zero, SpriteEffects.None, 0, 2f));
 
             // TODO: use this.Content to load your game content here
         }
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -49,34 +53,39 @@ namespace Game_Jam_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            Object player;
+            sceneManager.currentScene.sceneObjects.TryGetValue("player", out player);
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                
+                player.position.Y -= 5;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                player.position.Y += 5;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                player.position.X -= 5;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                player.position.X += 5;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 sceneManager.saveScene("egg.scene");
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.L))
             {
                 sceneManager.loadScene("egg.scene");
+                LoadContent();
+                sceneManager.currentScene.sceneObjects.TryGetValue("player", out player);
+                player.texture = playerTex;
             }
 
-            Object lime;
-            sceneManager.currentScene.sceneObjects.TryGetValue("lime", out lime);
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                lime.position.Y -= 5;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                lime.position.Y += 5;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                lime.position.X -= 5;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                lime.position.X += 5;
-            }
+            
+
 
             base.Update(gameTime);
         }
@@ -101,6 +110,7 @@ namespace Game_Jam_Game
 
             base.Draw(gameTime);
         }
+
     }
 }
 //fuck yeah

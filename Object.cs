@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 
 namespace Game_Jam_Game
 {
@@ -9,6 +10,7 @@ namespace Game_Jam_Game
     {
         public Vector2 position;
         public float rotation;
+        [JsonIgnore]
         public Texture2D texture;
         public string name;
         public Rectangle sourceRect;
@@ -150,6 +152,6 @@ namespace Game_Jam_Game
             this.scale = scale;
         }
 
-
+        
     }
 }

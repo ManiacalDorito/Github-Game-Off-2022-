@@ -15,7 +15,6 @@ namespace Game_Jam_Game
     {
         public Scene currentScene;
 
-        
 
         public SceneManager()
         {
@@ -32,6 +31,7 @@ namespace Game_Jam_Game
                 StreamReader sr = new StreamReader(fileName);
                 string json = sr.ReadToEndAsync().Result;
 
+                
                 // converts from json string to Scene object
                 currentScene = JsonConvert.DeserializeObject<Scene>(json);
             
