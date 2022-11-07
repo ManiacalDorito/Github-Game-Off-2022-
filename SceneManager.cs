@@ -39,6 +39,7 @@ namespace Game_Jam_Game
                 
                 // converts from json string to Scene object
                 currentScene = JsonConvert.DeserializeObject<Scene>(json);
+
             
                 sr.Close();
             }

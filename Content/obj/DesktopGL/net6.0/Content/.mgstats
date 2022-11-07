@@ -1,6 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/../../../Documents/Aseprite Drawings/testttt.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/testttt.xnb","TextureProcessor","Texture2DContent",6580,1000085,0.1321236
-"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/Background.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/Background.xnb","TextureProcessor","Texture2DContent",190,1685,0.1202405
-"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/lime.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/lime.xnb","TextureProcessor","Texture2DContent",134,485,0.1176236
-"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/lime2.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/lime2.xnb","TextureProcessor","Texture2DContent",1672,160085,0.127205
-"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/QuitButton.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/QuitButton.xnb","TextureProcessor","Texture2DContent",467,51285,0.0034907
+"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/lime.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/lime.xnb","TextureProcessor","Texture2DContent",134,485,0.1114642

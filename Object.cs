@@ -3,9 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 
+
 namespace Game_Jam_Game
 {
     [System.Serializable]
+
+    //-----------------------------------------------------------------------------------------------------------
+    // THIS CLASS IS FOR GENERAL GAME OBJECTS, IT HAS LOTS OF CONSTRUCTORS SO DONT EVEN OPEN IT THERES A FUCKING REASON IT GOES FROM 14 LINES TO 157 FUCKING LINES
+    //-----------------------------------------------------------------------------------------------------------
     public class Object
     {
         public Vector3 position;
@@ -13,16 +18,17 @@ namespace Game_Jam_Game
         [JsonIgnore]
         public Texture2D texture;
         public Rectangle sourceRect;
+        public string texAdress;
         public Color Color;
         public Vector2 origin;
         public SpriteEffects spriteEffects;
         public int layerDepth;
         public float scale;
-        public Rectangle collisionRect;
+        public Rectangle collisionRect;       
 
         // Automatically creates the collisionRect from the sourceRect 
 
-        public Object()
+        public Object(string texAdress)
         {
             this.position = new Vector3(0, 0, 0);
             this.rotation = 0f;
@@ -49,12 +55,13 @@ namespace Game_Jam_Game
         /// <param name="spriteEffects">the spriteEffects to be applied</param>
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
-        public Object(Vector3 position, float rotation, Texture2D texture, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
+        [JsonConstructor]
+        public Object(Vector3 position, float rotation, string texAdress, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
         {
             this.position = position;
             this.rotation = rotation;
-            this.texture = texture;
-            this.sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
+            this.texAdress = texAdress;
+            this.sourceRect = Rectangle.Empty;
             this.collisionRect = this.sourceRect;
             this.Color = color;
             this.origin = origin;
@@ -76,11 +83,11 @@ namespace Game_Jam_Game
         /// <param name="spriteEffects">the spriteEffects to be applied</param>
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
-        public Object(Vector3 position, float rotation, Texture2D texture, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
+        public Object(Vector3 position, float rotation, string texAdress, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
         {
             this.position = position;
             this.rotation = rotation;
-            this.texture = texture;
+            this.texAdress = texAdress;
             this.sourceRect = sourceRect;
             this.collisionRect = this.sourceRect;
             this.Color = color;
@@ -104,12 +111,12 @@ namespace Game_Jam_Game
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
         /// <param name="collisionRect">the collision rectangle of the object</param>
-        public Object(Vector3 position, float rotation, Texture2D texture, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
+        public Object(Vector3 position, float rotation, string texAdress, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
         {
             this.position = position;
             this.rotation = rotation;
-            this.texture = texture;
-            this.sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
+            this.texAdress = texAdress;
+            this.sourceRect = Rectangle.Empty;
             this.collisionRect = collisionRect;
             this.Color = color;
             this.origin = origin;
@@ -132,13 +139,13 @@ namespace Game_Jam_Game
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
         /// <param name="collisionRect">the collision rectangle of the object</param>
-        public Object(Vector3 position, float rotation, Texture2D texture, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
+        public Object(Vector3 position, float rotation, string texAdress, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
         {
             this.position = position;
             this.rotation = rotation;
-            this.texture = texture;
+            this.texAdress= texAdress;
             this.sourceRect = sourceRect;
-            this.collisionRect=collisionRect;
+            this.collisionRect = collisionRect;
             this.Color = color;
             this.origin = origin;
             this.spriteEffects = spriteEffects;
@@ -146,44 +153,46 @@ namespace Game_Jam_Game
             this.scale = scale;
         }
 
-        
     }
 
+
+
+
+    //-----------------------------------------------------------------------------------------------------------
+    // THIS CLASS IS FOR THE CAMERA, SO THAT YOU CAN SET THE LOCATION AND ROTATION AND UPDATE THE SPRITEBATCH MATRIX WITH THE VALUES
+    //-----------------------------------------------------------------------------------------------------------
     public class Camera2D
     {
         public Camera2D()
         {
-            Zoom = 1;
             Position = Vector3.Zero;
             Rotation = 0;
             Origin = Vector2.Zero;
-            Position = Vector3.Zero;
         }
 
-        public float Zoom { get; set; }
-        public float moveSpeed { get; set; }
         public Vector3 Position { get; set; }
         public float Rotation { get; set; }
         public Vector2 Origin { get; set; }
 
-        public void Move(Vector3 direction)
+
+    }
+
+
+
+
+    //-----------------------------------------------------------------------------------------------------------
+    // THIS CLASS IS FOR THE GUI, THIS CLASS IS NO DIFFERENT FROM A NORMAL OBJECT OTHER THAN IT HAS A HIGHER LAYER AND MOVES AGAINST THE CAMERA
+    //-----------------------------------------------------------------------------------------------------------
+    public class Gui
+    {
+        Gui()
         {
-            Position += direction;
+
+
+
         }
 
-        public void MoveSmooth(Vector3 direction)
-        {
-            Vector3.Lerp(Position, direction, Zoom);
-        }
 
-        public Matrix GetTransform()
-        {
-            var translationMatrix = Matrix.CreateTranslation(new Vector3(Position.X, Position.Y, 0));
-            var rotationMatrix = Matrix.CreateRotationZ(Rotation);
-            var scaleMatrix = Matrix.CreateScale(new Vector3(Zoom, Zoom, 1));
-            var originMatrix = Matrix.CreateTranslation(new Vector3(Origin.X, Origin.Y, 0));
 
-            return translationMatrix * rotationMatrix * scaleMatrix * originMatrix;
-        }
     }
 }
