@@ -8,11 +8,10 @@ namespace Game_Jam_Game
     [System.Serializable]
     public class Object
     {
-        public Vector2 position;
+        public Vector3 position;
         public float rotation;
         [JsonIgnore]
         public Texture2D texture;
-        public string name;
         public Rectangle sourceRect;
         public Color Color;
         public Vector2 origin;
@@ -25,10 +24,9 @@ namespace Game_Jam_Game
 
         public Object()
         {
-            this.position = new Vector2(0, 0);
+            this.position = new Vector3(0, 0, 0);
             this.rotation = 0f;
             this.texture = null;
-            this.name = "";
             this.sourceRect = Rectangle.Empty;
             this.Color = Color.White;
             this.origin = Vector2.Zero;
@@ -51,12 +49,11 @@ namespace Game_Jam_Game
         /// <param name="spriteEffects">the spriteEffects to be applied</param>
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
-        public Object(Vector2 position, float rotation, Texture2D texture, string name, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
+        public Object(Vector3 position, float rotation, Texture2D texture, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
         {
             this.position = position;
             this.rotation = rotation;
             this.texture = texture;
-            this.name = name;
             this.sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
             this.collisionRect = this.sourceRect;
             this.Color = color;
@@ -79,12 +76,11 @@ namespace Game_Jam_Game
         /// <param name="spriteEffects">the spriteEffects to be applied</param>
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
-        public Object(Vector2 position, float rotation, Texture2D texture, string name, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
+        public Object(Vector3 position, float rotation, Texture2D texture, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale)
         {
             this.position = position;
             this.rotation = rotation;
             this.texture = texture;
-            this.name = name;
             this.sourceRect = sourceRect;
             this.collisionRect = this.sourceRect;
             this.Color = color;
@@ -108,12 +104,11 @@ namespace Game_Jam_Game
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
         /// <param name="collisionRect">the collision rectangle of the object</param>
-        public Object(Vector2 position, float rotation, Texture2D texture, string name, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
+        public Object(Vector3 position, float rotation, Texture2D texture, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
         {
             this.position = position;
             this.rotation = rotation;
             this.texture = texture;
-            this.name = name;
             this.sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
             this.collisionRect = collisionRect;
             this.Color = color;
@@ -137,12 +132,11 @@ namespace Game_Jam_Game
         /// <param name="layerDepth">the layer depth of the object</param>
         /// <param name="scale">the scale of the object</param>
         /// <param name="collisionRect">the collision rectangle of the object</param>
-        public Object(Vector2 position, float rotation, Texture2D texture, string name, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
+        public Object(Vector3 position, float rotation, Texture2D texture, Rectangle sourceRect, Color color, Vector2 origin, SpriteEffects spriteEffects, int layerDepth, float scale, Rectangle collisionRect)
         {
             this.position = position;
             this.rotation = rotation;
             this.texture = texture;
-            this.name = name;
             this.sourceRect = sourceRect;
             this.collisionRect=collisionRect;
             this.Color = color;
@@ -153,5 +147,43 @@ namespace Game_Jam_Game
         }
 
         
+    }
+
+    public class Camera2D
+    {
+        public Camera2D()
+        {
+            Zoom = 1;
+            Position = Vector3.Zero;
+            Rotation = 0;
+            Origin = Vector2.Zero;
+            Position = Vector3.Zero;
+        }
+
+        public float Zoom { get; set; }
+        public float moveSpeed { get; set; }
+        public Vector3 Position { get; set; }
+        public float Rotation { get; set; }
+        public Vector2 Origin { get; set; }
+
+        public void Move(Vector3 direction)
+        {
+            Position += direction;
+        }
+
+        public void MoveSmooth(Vector3 direction)
+        {
+            Vector3.Lerp(Position, direction, Zoom);
+        }
+
+        public Matrix GetTransform()
+        {
+            var translationMatrix = Matrix.CreateTranslation(new Vector3(Position.X, Position.Y, 0));
+            var rotationMatrix = Matrix.CreateRotationZ(Rotation);
+            var scaleMatrix = Matrix.CreateScale(new Vector3(Zoom, Zoom, 1));
+            var originMatrix = Matrix.CreateTranslation(new Vector3(Origin.X, Origin.Y, 0));
+
+            return translationMatrix * rotationMatrix * scaleMatrix * originMatrix;
+        }
     }
 }

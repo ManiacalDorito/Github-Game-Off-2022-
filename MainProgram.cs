@@ -2,17 +2,19 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-
+using System.Diagnostics;
+     
 namespace Game_Jam_Game
 {
     public class MainProgram : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
         private SceneManager sceneManager;
-
+        private Camera2D camera = new Camera2D();
         Texture2D playerTex;
+        Texture2D quitButtonTex;
+
 
         public MainProgram()
         {
@@ -28,9 +30,9 @@ namespace Game_Jam_Game
             sceneManager = new SceneManager();
             base.Initialize();
 
-            sceneManager.currentScene.sceneObjects.Add("player", new Object(Vector2.Zero, 0f, playerTex, "player", new Rectangle(0, 0, playerTex.Width, playerTex.Height), Color.White, Vector2.Zero, SpriteEffects.None, 0, 2f));
+            sceneManager.addObject("player", new Object(Vector3.Zero, 0f, playerTex, Color.White, Vector2.Zero, SpriteEffects.None, 0, 2f));
 
-
+            sceneManager.addObject("quitButton", new Object(Vector3.Zero, 0f, quitButtonTex, Color.White, Vector2.Zero, SpriteEffects.None, 0, 1f));
         }
 
         protected override void LoadContent()
@@ -39,8 +41,8 @@ namespace Game_Jam_Game
             
 
             playerTex = Content.Load<Texture2D>("Sprites/lime2");
-            
 
+            quitButtonTex = Content.Load<Texture2D>("Sprites/QuitButton");
 
             // TODO: use this.Content to load your game content here
         }
@@ -49,11 +51,9 @@ namespace Game_Jam_Game
         protected override void Update(GameTime gameTime)
         {
 
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+            // Handles input and player movement
             Object player;
+            Object quitButton;
             sceneManager.currentScene.sceneObjects.TryGetValue("player", out player);
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
@@ -81,32 +81,40 @@ namespace Game_Jam_Game
                 sceneManager.loadScene("egg.scene");
                 LoadContent();
                 sceneManager.currentScene.sceneObjects.TryGetValue("player", out player);
+                sceneManager.currentScene.sceneObjects.TryGetValue("quitButton", out quitButton);
                 player.texture = playerTex;
+                quitButton.texture = quitButtonTex;
             }
 
-            
+            // Sets the camera position to the players position
+            camera.Position = new Vector3(player.position.X / player.scale, player.position.Y / player.scale, player.position.Z/player.scale);
 
+            Debug.WriteLine("P : " + player.position);
+            Debug.WriteLine("C : " + camera.Position);
+            Debug.WriteLine("C Matrix : " + Matrix.CreateTranslation(camera.Position).Translation);
 
             base.Update(gameTime);
+
         }
+
+        
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
 
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointWrap, null, null);
+            // SamplerState.PointWrap makes it so that you can scale pixel art without it getting compressed
+            _spriteBatch.Begin(0, null, SamplerState.PointWrap, null, null, null, Matrix.CreateTranslation(camera.Position)) ;
             
 
             foreach (KeyValuePair<string, Object> obj in sceneManager.currentScene.sceneObjects)
             {
-                _spriteBatch.Draw(obj.Value.texture, obj.Value.position, obj.Value.sourceRect, obj.Value.Color, obj.Value.rotation, obj.Value.origin, obj.Value.scale, obj.Value.spriteEffects, obj.Value.layerDepth);
+                _spriteBatch.Draw(obj.Value.texture, new Vector2(obj.Value.position.X, obj.Value.position.Y), obj.Value.sourceRect, obj.Value.Color, obj.Value.rotation, obj.Value.origin, obj.Value.scale, obj.Value.spriteEffects, obj.Value.layerDepth);
             }
 
-
+            
             _spriteBatch.End();
 
-            
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

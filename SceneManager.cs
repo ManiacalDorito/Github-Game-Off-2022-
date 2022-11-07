@@ -21,6 +21,11 @@ namespace Game_Jam_Game
             currentScene = new Scene("Scene!");
         }
 
+        public void addObject(string name, Object obj)
+        {
+            currentScene.sceneObjects.Add(name, obj);
+        }
+
         public void loadScene(string fileName)
         {
 
