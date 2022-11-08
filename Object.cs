@@ -163,6 +163,7 @@ namespace Game_Jam_Game
     //-----------------------------------------------------------------------------------------------------------
     public class Camera2D
     {
+        [JsonConstructor]
         public Camera2D()
         {
             Position = Vector3.Zero;
@@ -185,14 +186,45 @@ namespace Game_Jam_Game
     //-----------------------------------------------------------------------------------------------------------
     public class Gui
     {
-        Gui()
+        static Vector3 cameraPosition;
+        Vector3 transform { get; set; }
+        float scale { get; set; }
+        [JsonIgnore]
+        Texture2D texture { get; set; }
+        string texAdress { get; set; }
+        float rotation { get; set; }
+        int layerheight { get; set; }
+
+        [JsonConstructor]
+        Gui(ref Vector3 cameraPosition, Vector3 transform, float scale, string texAdress, float rotation, int layerheight)
         {
-
-
+            this.rotation = rotation;
+            this.texAdress = texAdress;
+            this.scale = scale;
+            this.rotation = rotation;
+            this.layerheight = layerheight;
+            this.texture = null;
 
         }
 
 
 
+    }
+
+    public class BackgroundTile
+    {
+
+        Vector3 transform;
+        float scale;
+        [JsonIgnore]
+        Texture2D texture;
+        string textureAdress;
+
+
+        [JsonConstructor]
+        BackgroundTile()
+        {
+
+        }
     }
 }

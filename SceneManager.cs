@@ -18,7 +18,7 @@ namespace Game_Jam_Game
 
         public SceneManager()
         {
-            currentScene = new Scene("Scene!");
+            currentScene = new Scene("");
         }
 
         public void addObject(string name, Object obj)

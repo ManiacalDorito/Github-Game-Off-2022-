@@ -11,12 +11,16 @@ namespace Game_Jam_Game
     public class Scene
     {
         public Dictionary<string, Object> sceneObjects { get; set; }
+        public List<Gui> guiObjects { get; set; }
+        public List<BackgroundTile> backgroundTiles { get; set; }
         public string name { get; set; }
 
         [JsonConstructor]
         public Scene(string name)
         {
             sceneObjects = new Dictionary<string, Object>();
+            guiObjects = new List<Gui>();
+            backgroundTiles = new List<BackgroundTile>();
             this.name = name;
         }
 

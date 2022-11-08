@@ -43,7 +43,9 @@ namespace Game_Jam_Game
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
 
-            sceneManager.addObject("player", new Object(new Vector3(_graphics.PreferredBackBufferWidth/2, _graphics.PreferredBackBufferHeight/2, 0), 0f, "Sprites/lime", Color.White, Vector2.Zero, SpriteEffects.None, 0, 4f));;
+            sceneManager.addObject("player", new Object(new Vector3(_graphics.PreferredBackBufferWidth/2, _graphics.PreferredBackBufferHeight/2, 0), 0f, "Sprites/lime", Color.White, Vector2.Zero, SpriteEffects.None, 0, 4f));
+
+            sceneManager.addObject("");
 
 
 
