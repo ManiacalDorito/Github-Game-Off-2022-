@@ -11,7 +11,8 @@ namespace Game_Jam_Game
     public class Scene
     {
         public Dictionary<string, Object> sceneObjects { get; set; }
-        public List<Gui> guiObjects { get; set; }
+        public Dictionary<string, Gui> guiObjects { get; set; }
+        public Dictionary<string, AnimatedObject> animatedSceneObjects { get; set; }
         public List<BackgroundTile> backgroundTiles { get; set; }
         public string name { get; set; }
 
@@ -19,7 +20,8 @@ namespace Game_Jam_Game
         public Scene(string name)
         {
             sceneObjects = new Dictionary<string, Object>();
-            guiObjects = new List<Gui>();
+            animatedSceneObjects = new Dictionary<string, AnimatedObject>();
+            guiObjects = new Dictionary<string, Gui>();
             backgroundTiles = new List<BackgroundTile>();
             this.name = name;
         }

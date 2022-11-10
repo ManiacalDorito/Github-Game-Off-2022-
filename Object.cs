@@ -186,7 +186,7 @@ namespace Game_Jam_Game
     //-----------------------------------------------------------------------------------------------------------
     public class Gui
     {
-        static Vector3 cameraPosition;
+        static Vector3 cameraMoveAmount { get; set; }
         Vector3 transform { get; set; }
         float scale { get; set; }
         [JsonIgnore]
@@ -196,7 +196,7 @@ namespace Game_Jam_Game
         int layerheight { get; set; }
 
         [JsonConstructor]
-        Gui(ref Vector3 cameraPosition, Vector3 transform, float scale, string texAdress, float rotation, int layerheight)
+        Gui(Vector3 transform, float scale, string texAdress, float rotation, int layerheight)
         {
             this.rotation = rotation;
             this.texAdress = texAdress;

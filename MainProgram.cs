@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
      
 namespace Game_Jam_Game
 {
@@ -45,9 +46,16 @@ namespace Game_Jam_Game
 
             sceneManager.addObject("player", new Object(new Vector3(_graphics.PreferredBackBufferWidth/2, _graphics.PreferredBackBufferHeight/2, 0), 0f, "Sprites/lime", Color.White, Vector2.Zero, SpriteEffects.None, 0, 4f));
 
-            sceneManager.addObject("");
+            sceneManager.addAnimatedObject("TestPlayer", new AnimatedObject(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2), Vector2.Zero, "Sprites/Sprite-0002", 0f, 0.5f, 8f, Color.White, 0, SpriteEffects.None, 8));
+            AnimatedObject player = sceneManager.currentScene.animatedSceneObjects["TestPlayer"];
 
+            sceneManager.GetAnimArray("TestPlayer").Add(new Rectangle[]
+            {
+                new Rectangle(0, 0, 10, 10),
+                new Rectangle(10, 0, 10, 10)
+            });
 
+            player.SetCurrentAnimArray(0);
 
             HandleObjectLoad();
 
@@ -64,6 +72,11 @@ namespace Game_Jam_Game
                     kvp.Value.sourceRect = new Rectangle(0, 0, kvp.Value.texture.Width, kvp.Value.texture.Height);
                 }
             }
+
+            foreach (KeyValuePair<string, AnimatedObject> kvp in sceneManager.currentScene.animatedSceneObjects)
+            {
+                kvp.Value.spriteSheet = Content.Load<Texture2D>(kvp.Value.texAdress);
+            }
         }
 
 
@@ -76,6 +89,12 @@ namespace Game_Jam_Game
             Object player;
             sceneManager.currentScene.sceneObjects.TryGetValue("player", out player);
 
+            AnimatedObject test;
+            sceneManager.currentScene.animatedSceneObjects.TryGetValue("TestPlayer", out test);
+
+            //
+            sceneManager.currentScene.animatedSceneObjects["TestPlayer"].UpdateSourceRect(gameTime);
+
             // Put code for movement here
             PlayerMovement();
 
@@ -86,11 +105,9 @@ namespace Game_Jam_Game
 
         }
 
-
-
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Green);
 
             // SamplerState.PointWrap makes it so that you can scale pixel art without it getting compressed
             _spriteBatch.Begin(0, null, SamplerState.PointWrap, null, null, null, Matrix.CreateTranslation(camera.Position)) ;
@@ -101,7 +118,12 @@ namespace Game_Jam_Game
                 _spriteBatch.Draw(obj.Value.texture, new Vector2(obj.Value.position.X, obj.Value.position.Y), obj.Value.sourceRect, obj.Value.Color, obj.Value.rotation, obj.Value.origin, obj.Value.scale, obj.Value.spriteEffects, obj.Value.layerDepth);
             }
 
-            
+            foreach (KeyValuePair<string, AnimatedObject> obj in sceneManager.currentScene.animatedSceneObjects)
+            {
+                _spriteBatch.Draw(obj.Value.spriteSheet, obj.Value.position, obj.Value.sourceRectangle, obj.Value.color, obj.Value.rotation, obj.Value.origin, obj.Value.scale, obj.Value.spriteEffects, obj.Value.layerDepth);
+            }
+
+
             _spriteBatch.End();
 
 

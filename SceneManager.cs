@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.Xna.Framework;
 
 
 namespace Game_Jam_Game
@@ -24,6 +25,21 @@ namespace Game_Jam_Game
         public void addObject(string name, Object obj)
         {
             currentScene.sceneObjects.Add(name, obj);
+        }
+
+        public void addAnimatedObject(string name, AnimatedObject obj)
+        {
+            currentScene.animatedSceneObjects.Add(name, obj);
+        }
+
+        public void addGuiObject(string name, Gui obj)
+        {
+            currentScene.guiObjects.Add(name, obj);
+        }
+
+        public void addBackgroundTile(string name, BackgroundTile obj)
+        {
+            currentScene.backgroundTiles.Add(obj);
         }
 
         public void loadScene(string fileName)
@@ -73,6 +89,12 @@ namespace Game_Jam_Game
             }
 
             
+        }
+
+
+        public List<Rectangle[]> GetAnimArray(string name)
+        {
+            return currentScene.animatedSceneObjects[name].sourceArray;
         }
     }
 }

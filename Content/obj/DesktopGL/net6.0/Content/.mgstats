@@ -1,2 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/f792e82792d32c3c1d192723a6eb68c0266b170c.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/testspritesheet.xnb","TextureProcessor","Texture2DContent",351190,3198293,0.17579
 "C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/lime.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/lime.xnb","TextureProcessor","Texture2DContent",134,485,0.1114642
+"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/Sprite-0002.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/Sprite-0002.xnb","TextureProcessor","Texture2DContent",170,885,0.1080365
+"C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/StreetsSpritesheet.png","C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/bin/DesktopGL/Content/Sprites/StreetsSpritesheet.xnb","TextureProcessor","Texture2DContent",566,90085,0.1202094
