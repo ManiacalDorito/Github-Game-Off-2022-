@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game Jam Game", "Game Jam Game.csproj", "{9931F1F8-9CC4-4F2B-9304-C7A359DD63A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game Jam Game", "Game Jam Game.csproj", "{9931F1F8-9CC4-4F2B-9304-C7A359DD63A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

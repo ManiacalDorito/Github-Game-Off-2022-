@@ -46,13 +46,13 @@ namespace Game_Jam_Game
 
             sceneManager.addObject("player", new Object(new Vector3(_graphics.PreferredBackBufferWidth/2, _graphics.PreferredBackBufferHeight/2, 0), 0f, "Sprites/lime", Color.White, Vector2.Zero, SpriteEffects.None, 0, 4f));
 
-            sceneManager.addAnimatedObject("TestPlayer", new AnimatedObject(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2), Vector2.Zero, "Sprites/Sprite-0002", 0f, 0.5f, 8f, Color.White, 0, SpriteEffects.None, 8));
+            sceneManager.addAnimatedObject("TestPlayer", new AnimatedObject(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2), Vector2.Zero, "Sprites/testSheetFuck", 0f, 0.5f, 1f, Color.White, 0, SpriteEffects.None, 8));
             AnimatedObject player = sceneManager.currentScene.animatedSceneObjects["TestPlayer"];
 
             sceneManager.GetAnimArray("TestPlayer").Add(new Rectangle[]
             {
-                new Rectangle(0, 0, 10, 10),
-                new Rectangle(10, 0, 10, 10)
+                new Rectangle(0, 0, 100, 100),
+                new Rectangle(200, 0, 100, 100)
             });
 
             player.SetCurrentAnimArray(0);
@@ -92,14 +92,15 @@ namespace Game_Jam_Game
             AnimatedObject test;
             sceneManager.currentScene.animatedSceneObjects.TryGetValue("TestPlayer", out test);
 
-            //
-            sceneManager.currentScene.animatedSceneObjects["TestPlayer"].UpdateSourceRect(gameTime);
+            
+            test.UpdateSourceRect(gameTime);
+            test.looping = false;
 
             // Put code for movement here
             PlayerMovement();
 
             // Code for camera movement
-            CameraMovement(player);
+            CameraMovement(test);
 
             base.Update(gameTime);
 
@@ -107,7 +108,7 @@ namespace Game_Jam_Game
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Green);
+            GraphicsDevice.Clear(Color.BlanchedAlmond);
 
             // SamplerState.PointWrap makes it so that you can scale pixel art without it getting compressed
             _spriteBatch.Begin(0, null, SamplerState.PointWrap, null, null, null, Matrix.CreateTranslation(camera.Position)) ;
@@ -141,6 +142,11 @@ namespace Game_Jam_Game
         private void CameraMovement(Object player)
         {
             camera.Position = new Vector3(-player.position.X + _graphics.PreferredBackBufferWidth / 2 - (player.texture.Width / 2) * player.scale, -player.position.Y + _graphics.PreferredBackBufferHeight / 2 - (player.texture.Height / 2) * player.scale, -player.position.Z);
+        }
+
+        private void CameraMovement(AnimatedObject player)
+        {
+            camera.Position = new Vector3(-player.position.X + _graphics.PreferredBackBufferWidth / 2 - (player.sourceRectangle.Width / 2) * player.scale, -player.position.Y + _graphics.PreferredBackBufferHeight / 2 - (player.sourceRectangle.Height / 2) * player.scale, 0);
         }
 
         private Object PlayerMovement()

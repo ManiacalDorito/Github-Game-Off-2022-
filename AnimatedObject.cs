@@ -12,7 +12,10 @@ namespace Game_Jam_Game
 {
     public class AnimatedObject
     {
-        public Object baseObject { get; set; }
+        // ---------------------------------------------------------
+        // This works fucking PERFECTLY LETS FUCKING GOOOOOOOOOOOOOO
+        // ---------------------------------------------------------
+
         [JsonIgnore]
         public Texture2D spriteSheet { get; set; }
         public Vector2 position { get; set; }
@@ -34,9 +37,10 @@ namespace Game_Jam_Game
 
         public bool looping { get; set; }
 
-        public int frameArrayHeight { get; set; }
 
-        private int i = 1;
+
+
+        public int i = 0;
 
         [JsonConstructor]
         public AnimatedObject(Vector2 transform, Vector2 origin, string texAdress, float rotation, float animationSpeed, float scale, Color color, int layerDepth, SpriteEffects spriteEffects, int frameArrayHeight)
@@ -53,8 +57,8 @@ namespace Game_Jam_Game
             this.color = color;
             this.layerDepth = layerDepth;
             this.spriteEffects = spriteEffects;
+            this.looping = true;
             this.sourceArray = new List<Rectangle[]>();
-            this.frameArrayHeight = frameArrayHeight;
         }
 
 
@@ -73,20 +77,39 @@ namespace Game_Jam_Game
 
         public void UpdateSourceRect(GameTime time)
         {
+
+            // Runs once, if ranOnce true and looping false just return
+
             timeSinceLast += (float)time.ElapsedGameTime.TotalSeconds;
+            bool ranOnce = false;
 
             // If time elapsed is greater than delay between frames
-            if (timeSinceLast >= animDelay && i < currentAnimArray.Length +1)
+            if (timeSinceLast >= animDelay && i < currentAnimArray.Length)
             {
+                if (ranOnce && looping == false)
+                {
+                    return;
+                }
+                else
+                {
+                    timeSinceLast = 0f;
+                    sourceRectangle = currentAnimArray[i];
+                    i++;
+                }
 
-                timeSinceLast = 0f;
-                sourceRectangle = currentAnimArray[i];
-                i++;
+                
             }
             
             if (i == currentAnimArray.Length)
             {
-                i = 0;
+                ranOnce = true;
+
+                if (looping == true)
+                {
+                    i = 0;
+                }
+                
+                
             }
             
         }
