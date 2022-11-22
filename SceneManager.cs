@@ -12,35 +12,25 @@ using Microsoft.Xna.Framework;
 namespace Game_Jam_Game
 {
     
-    internal class SceneManager
+    public class SceneManager
     {
-        public Scene currentScene;
-
-
+        public List<Entity> scene;
+        
+        // Makes a new dictionary of the objects in the scene
+        [JsonConstructor]
         public SceneManager()
         {
-            currentScene = new Scene("");
+            scene = new List<Entity>();
         }
 
-        public void addObject(string name, Object obj)
+        // Adds a Entity to the scene
+        public void addEntity(Entity entity)
         {
-            currentScene.sceneObjects.Add(name, obj);
+            scene.Add(entity);
         }
 
-        public void addAnimatedObject(string name, AnimatedObject obj)
-        {
-            currentScene.animatedSceneObjects.Add(name, obj);
-        }
 
-        public void addGuiObject(string name, Gui obj)
-        {
-            currentScene.guiObjects.Add(name, obj);
-        }
 
-        public void addBackgroundTile(string name, BackgroundTile obj)
-        {
-            currentScene.backgroundTiles.Add(obj);
-        }
 
         public void loadScene(string fileName)
         {
@@ -54,8 +44,9 @@ namespace Game_Jam_Game
 
                 
                 // converts from json string to Scene object
-                currentScene = JsonConvert.DeserializeObject<Scene>(json);
+                scene = JsonConvert.DeserializeObject<List<Entity>>(json);
 
+                
             
                 sr.Close();
             }
@@ -77,7 +68,7 @@ namespace Game_Jam_Game
                 StreamWriter writer = new StreamWriter(fileName);
                 JsonSerializerSettings settings = new JsonSerializerSettings();
 
-                writer.Write(JsonConvert.SerializeObject(currentScene, Formatting.Indented));
+                writer.Write(JsonConvert.SerializeObject(scene, Formatting.Indented));
                 
                 Console.Write("Saved to: " + fileName);
                 
@@ -92,9 +83,5 @@ namespace Game_Jam_Game
         }
 
 
-        public List<Rectangle[]> GetAnimArray(string name)
-        {
-            return currentScene.animatedSceneObjects[name].sourceArray;
-        }
     }
 }
