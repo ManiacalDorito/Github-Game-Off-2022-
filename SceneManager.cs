@@ -7,6 +7,10 @@ using System.IO;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
+using System.Threading;
 
 
 namespace Game_Jam_Game
@@ -15,22 +19,32 @@ namespace Game_Jam_Game
     public class SceneManager
     {
         public List<Entity> scene;
+
+        
+
         
         // Makes a new dictionary of the objects in the scene
         [JsonConstructor]
         public SceneManager()
         {
             scene = new List<Entity>();
+            
         }
 
         // Adds a Entity to the scene
         public void addEntity(Entity entity)
         {
             scene.Add(entity);
+            
+        }
+
+        public void removeEntity(Entity entity)
+        {
+            scene.Remove(entity);
         }
 
 
-
+        
 
         public void loadScene(string fileName)
         {

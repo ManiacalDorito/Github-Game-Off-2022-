@@ -22,8 +22,22 @@ namespace Game_Jam_Game
 
         public void AddComponent(Component component)
         {
+           
             components.Add(component);
             
+        }
+
+        public void RemoveComponent(Component component)
+        {
+            components.Remove(component);
+        }
+
+        public Entity clone()
+        {
+            Entity clonedEnt = new Entity();
+            clonedEnt.ID = ID + "_clone";
+            clonedEnt.components = components;
+            return clonedEnt;
         }
 
         // method for getting components
@@ -37,6 +51,18 @@ namespace Game_Jam_Game
                 }
             }
             return null;
+        }
+
+        public bool HasComponent<T>()
+        {
+            foreach (Component comp in components)
+            {
+                if (comp.GetType() == typeof(T))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
@@ -58,12 +84,27 @@ namespace Game_Jam_Game
         public Vector2 scale = Vector2.Zero;
         public float layerDepth = 0;
         public float rotation = 0;
+
+        public Transform(int layerdepth, Vector2 position, Vector2 scale, float rotation)
+        {
+            this.layerDepth = layerdepth;
+            this.position = position;
+            this.scale = scale;
+            this.rotation = rotation;
+        }
+
+        public Transform(int layerdepth)
+        {
+            this.layerDepth = layerdepth;
+        }
+
     }
 
     class Sprite : Component
     {
         [JsonIgnore]
         public Texture2D texture;
+        public Color color;
         public string texAdress { get; set; }
 
     }
@@ -75,11 +116,12 @@ namespace Game_Jam_Game
 
     }
 
-    class AnimatedSprite : Component
+    class SheetSprite : Component
     {
         public Texture2D texture;
         public Rectangle sourceRect;
         public string texAdress { get; set; }
+        public Color color;
 
         private int sheetWidth;
         private int sheetHeight;
@@ -87,7 +129,7 @@ namespace Game_Jam_Game
         private int frameWidth;
         private int frameHeight;
 
-        public AnimatedSprite(string c_texAdress, int c_sheetWidth, int c_sheetHeight)
+        public SheetSprite(string c_texAdress, int c_sheetWidth, int c_sheetHeight)
         {
             this.texAdress = c_texAdress;
             this.sheetHeight = c_sheetHeight;

@@ -32,6 +32,6 @@ namespace Game_Jam_Game
 
     class TransformSystem : BaseSystem<Transform> { }
     class SpriteSystem : BaseSystem<Sprite> { }
-    class AnimatedSpriteSystem : BaseSystem<AnimatedSprite> { }
+    class AnimatedSpriteSystem : BaseSystem<SheetSprite> { }
     class ColliderSystem : BaseSystem<Collider> { }
 }
