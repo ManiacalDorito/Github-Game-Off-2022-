@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-
+using System.Runtime.CompilerServices;
 
 namespace Game_Jam_Game
 {
@@ -17,7 +17,6 @@ namespace Game_Jam_Game
         public string ID { get; set; }
 
         public List<Component> components = new List<Component>();
-
 
 
         public void AddComponent(Component component)
@@ -36,11 +35,17 @@ namespace Game_Jam_Game
         {
             Entity clonedEnt = new Entity();
             clonedEnt.ID = ID + "_clone";
-            clonedEnt.components = components;
+            List<Component> clonedComponents = new List<Component>();
+            foreach (Component component in this.components)
+            {
+                clonedComponents.Add(component);
+            }
+
+            clonedEnt.components = clonedComponents;
             return clonedEnt;
         }
 
-        // method for getting components
+        // method for getting components, should be performant enough for now but can definitely be optimized? Dunno, apparently foreach is really fuckin fast
         public T GetComponent<T>() where T : Component
         {
             foreach (Component component in components)

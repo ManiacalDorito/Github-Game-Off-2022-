@@ -4,12 +4,16 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/EditorResources/EditorSprites/EditorGrid.png</File>
-    <File>C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/lime.png</File>
-    <File>C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/StreetsSpritesheet.png</File>
-    <File>C:/Users/mrpot/OneDrive/Desktop/Game Jam Game/Content/Sprites/testSheetFuck.png</File>
+    <File>C:/Users/mrpot/Documents/GitHub/Github-Game-Off-2022-/Content/EditorResources/EditorFonts/EditorFont.spritefont</File>
+    <File>C:/Users/mrpot/Documents/GitHub/Github-Game-Off-2022-/Content/EditorResources/EditorSprites/EditorGrid.png</File>
+    <File>C:/Users/mrpot/Documents/GitHub/Github-Game-Off-2022-/Content/EditorResources/EditorSprites/EditorInspectorBox.png</File>
+    <File>C:/Users/mrpot/Documents/GitHub/Github-Game-Off-2022-/Content/Sprites/lime.png</File>
+    <File>C:/Users/mrpot/Documents/GitHub/Github-Game-Off-2022-/Content/Sprites/StreetsSpritesheet.png</File>
+    <File>C:/Users/mrpot/Documents/GitHub/Github-Game-Off-2022-/Content/Sprites/testSheetFuck.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

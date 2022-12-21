@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using System.Runtime.CompilerServices;
 
 namespace Game_Jam_Game
 {
@@ -28,6 +29,8 @@ namespace Game_Jam_Game
                 component.Update(gameTime);
             }
         }
+
+        
     }
 
     class TransformSystem : BaseSystem<Transform> { }

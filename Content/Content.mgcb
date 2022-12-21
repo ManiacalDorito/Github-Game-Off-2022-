@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin EditorResources/EditorFonts/EditorFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:EditorResources/EditorFonts/EditorFont.spritefont
+
 #begin EditorResources/EditorSprites/EditorGrid.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -24,6 +31,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:EditorResources/EditorSprites/EditorGrid.png
+
+#begin EditorResources/EditorSprites/EditorInspectorBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:EditorResources/EditorSprites/EditorInspectorBox.png
 
 #begin Sprites/lime.png
 /importer:TextureImporter

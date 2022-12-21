@@ -21,12 +21,9 @@ namespace Game_Jam_Game
 
         public SceneManager SceneManager = new SceneManager();
 
-        public bool EditorEnabled;
-
         public EditorMain _Editor = new EditorMain();
+
         
-
-
 
 
         public MainProgram()
@@ -39,12 +36,13 @@ namespace Game_Jam_Game
 
         protected override void Initialize()
         {
-            // Change this to false when not launching editor
-            EditorEnabled = true;
 
-            if (EditorEnabled)
+            // Change this to false when not launching editor, and everything will simply not load at all.
+            _Editor.Enabled = true;
+
+            if (_Editor.Enabled)
             {
-                Window.AllowUserResizing = true;
+                Window.AllowUserResizing = false;
                 _Editor.Initialize();
             }
             
@@ -86,35 +84,45 @@ namespace Game_Jam_Game
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             LoadSprites();
-
+            LoadFonts();
+           
             
+        }
+
+        public void LoadFonts()
+        {
+
+
         }
 
         public void LoadSprites()
         {
             // Loads both types of sprite components
             Sprite sprite;
-            SheetSprite animatedSprite;
+            SheetSprite sheetSprite;
 
-
-            // If the editor is enabled loads all the editor sprites
-            if (EditorEnabled)
+            if (_Editor.Enabled)
             {
-                
-               foreach (Entity entity in _Editor.editorEntities)
-               {
+                // Loads editor fonts
+                _Editor.editorFont = Content.Load<SpriteFont>("EditorResources/EditorFonts/EditorFont");
+
+
+
+                // Loads all the entities in the scene
+                foreach (Entity entity in _Editor.editorEntities)
+                {
                     sprite = entity.GetComponent<Sprite>();
-                    animatedSprite = entity.GetComponent<SheetSprite>();
+                    sheetSprite = entity.GetComponent<SheetSprite>();
 
                     if (sprite != null)
                     {
                         sprite.texture = Content.Load<Texture2D>(sprite.texAdress);
                         sprite.FullyLoaded();
                     }
-                    else if (animatedSprite != null)
+                    else if (sheetSprite != null)
                     {
-                        animatedSprite.texture = Content.Load<Texture2D>(animatedSprite.texAdress);
-                        animatedSprite.FullyLoaded();
+                        sheetSprite.texture = Content.Load<Texture2D>(sheetSprite.texAdress);
+                        sheetSprite.FullyLoaded();
 
                     }
                 }
@@ -124,17 +132,17 @@ namespace Game_Jam_Game
             foreach (Entity entity in this.sceneManager.scene)
             {
                 sprite = entity.GetComponent<Sprite>();
-                animatedSprite = entity.GetComponent<SheetSprite>();
+                sheetSprite = entity.GetComponent<SheetSprite>();
 
                 if (sprite != null)
                 {
                     sprite.texture = Content.Load<Texture2D>(sprite.texAdress);
                     sprite.FullyLoaded();
                 }
-                else if (animatedSprite != null)
+                else if (sheetSprite != null)
                 {
-                    animatedSprite.texture = Content.Load<Texture2D>(animatedSprite.texAdress);
-                    animatedSprite.FullyLoaded();
+                    sheetSprite.texture = Content.Load<Texture2D>(sheetSprite.texAdress);
+                    sheetSprite.FullyLoaded();
 
                 }
             }
@@ -145,11 +153,13 @@ namespace Game_Jam_Game
 
         protected override void Update(GameTime gameTime)
         {
-            TransformSystem.Update(gameTime);
+            //TransformSystem.Update(gameTime);
 
-            if (EditorEnabled)
+
+            if (_Editor.Enabled)
             {
-                _Editor.Update(gameTime, ref spriteBatchOffset);
+                _Editor.Update(gameTime, ref spriteBatchOffset, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                
             }
 
             base.Update(gameTime);
@@ -174,11 +184,12 @@ namespace Game_Jam_Game
                 {
                     Transform transform = entity.GetComponent<Transform>();
                     Rectangle sourceRect = entity.GetComponent<SheetSprite>().sourceRect;
-                    if (InsideScreen(transform, sourceRect, spriteBatchOffset))
-                    {
-                        _spriteBatch.Draw(entity.GetComponent<SheetSprite>().texture, entity.GetComponent<Transform>().position, entity.GetComponent<SheetSprite>().sourceRect, Color.White);
+                    _spriteBatch.Draw(entity.GetComponent<SheetSprite>().texture, entity.GetComponent<Transform>().position, entity.GetComponent<SheetSprite>().sourceRect, Color.White);
 
-                    }
+                 /*   if (InsideScreen(transform, sourceRect, spriteBatchOffset))
+                    {
+
+                    }*/
                 }
                 else if (entity.HasComponent<Sprite>())
                 {
@@ -190,23 +201,12 @@ namespace Game_Jam_Game
 
 
             
-            if (EditorEnabled)
+            if (_Editor.Enabled)
             {
-                foreach (Entity entity in _Editor.editorEntities)
-                {
-                    if (entity.HasComponent<SheetSprite>() && InsideScreen(entity.GetComponent<Transform>(), entity.GetComponent<SheetSprite>().sourceRect, spriteBatchOffset))
-                    {
-                        _spriteBatch.Draw(entity.GetComponent<SheetSprite>().texture, entity.GetComponent<Transform>().position, entity.GetComponent<SheetSprite>().sourceRect, Color.White);
-                    }
-                    else if (entity.HasComponent<Sprite>() && InsideScreen(entity.GetComponent<Transform>(), entity.GetComponent<Sprite>().texture, spriteBatchOffset))
-                    {
-                        _spriteBatch.Draw(entity.GetComponent<Sprite>().texture, entity.GetComponent<Transform>().position, Color.White);
-
-                    }
-                }
+                _Editor.DrawEditor(ref _spriteBatch);
+                
             }
             
-
 
 
             _spriteBatch.End();
@@ -222,7 +222,6 @@ namespace Game_Jam_Game
         {
             // Checks if the object is within the screen, and draws it if it is
             // Goes from the top left origin, if custom origins are made update this code
-            Debug.Write((texture2D.Width + transform.position.X - cameraPos.X));
             bool VisibleOnX = (texture2D.Width + transform.position.X - cameraPos.X < 0) && (texture2D.Width + transform.position.X + cameraPos.X > _graphics.PreferredBackBufferWidth);
             bool VisibleOnY = (texture2D.Height + transform.position.Y - cameraPos.Y < 0) && (texture2D.Height + transform.position.Y + cameraPos.Y > _graphics.PreferredBackBufferHeight);
             // Returns true if it is visible on the x and y axis
