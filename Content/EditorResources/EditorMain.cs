@@ -42,7 +42,7 @@ namespace Game_Jam_Game.Content.EditorResources
                 g_time = time.TotalGameTime.TotalSeconds;
 
                 // if f1 is pressed, show the debug info at top left
-                if (Keyboard.GetState().IsKeyDown(Keys.F1)) { EditorDebugDraw = !EditorDebugDraw; }
+                if (Keyboard.GetState().IsKeyDown(Keys.E)) { EditorDebugDraw = !EditorDebugDraw; }
 
 
                 if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
